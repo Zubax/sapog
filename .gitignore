@@ -24,6 +24,7 @@ build
 # Generated
 dsdlc_generated
 *.log
+nunavut_out
 
 # Mac
 .DS_Store

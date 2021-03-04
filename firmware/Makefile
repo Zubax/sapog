@@ -66,23 +66,15 @@ UDEFS += -DCONFIG_PARAM_MAX_NAME_LENGTH=16
 #
 # UAVCAN library
 #
+UINCDIR += nunavut_out
+UINCDIR += libcanard/libcanard
+CSRC += $(SAPOG_BASE)/libcanard/libcanard/canard.c
 
-UDEFS += -DUAVCAN_STM32_TIMER_NUMBER=7                   \
-         -DUAVCAN_STM32_NUM_IFACES=2                     \
-         -DUAVCAN_CPP_VERSION=UAVCAN_CPP11               \
-         -DUAVCAN_STM32_CHIBIOS=1                        \
-         -DUAVCAN_GENERAL_PURPOSE_PLATFORM=0
-
-include libuavcan/libuavcan/include.mk
-CPPSRC += $(LIBUAVCAN_SRC)
-UINCDIR += $(LIBUAVCAN_INC)
-
-include libuavcan/libuavcan_drivers/stm32/driver/include.mk
-CPPSRC += $(LIBUAVCAN_STM32_SRC)
-UINCDIR += $(LIBUAVCAN_STM32_INC)
-
-$(info $(shell $(LIBUAVCAN_DSDLC) $(UAVCAN_DSDL_DIR)))
-UINCDIR += dsdlc_generated
+#
+# CAN driver & CAN r/w implementation
+#
+UINCDIR += bxcan
+CSRC += $(SAPOG_BASE)/bxcan/bxcan.c
 
 #
 # Git commit hash
