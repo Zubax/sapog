@@ -44,6 +44,7 @@
 #include <bxcan.h>
 #include <canard.h>
 #include <canard_dsdl.h>
+#include <board/canEnInit.hpp>
 
 namespace uavcan_node
 {
@@ -130,7 +131,7 @@ class : public chibios_rt::BaseStaticThread<4000>
         } else {
             ::os::lowsyslog("Could not compute CAN timing; status: %d, bitrate: %u\n", res, unsigned(bitrate));
         }
-
+        uavcan_stm32::CanEn();
         res = bxCANConfigure(0, timings, false);
         if (res) {
             ::os::lowsyslog("CAN inited at %u bps\n", unsigned(bitrate));
