@@ -46,7 +46,7 @@
 #include <temperature_sensor.hpp>
 #include <motor/motor.h>
 #include <uavcan_node/uavcan_node.hpp>
-
+#include "app_descriptor.hpp"
 
 namespace
 {
@@ -151,8 +151,8 @@ public:
 						last_save_failed_ = false;
 					} else {
 						last_save_failed_ = true;
-						logger.println("SAVE ERROR %d '%s'",
-						               res, std::strerror(std::abs(res)));
+						//logger.println("SAVE ERROR %d '%s'", res, std::strerror(std::abs(res)));
+						logger.println("SAVE ERROR %d", res);
 					}
 				}
 			}
@@ -183,7 +183,7 @@ int main()
 
 	motor_confirm_initialization();
 
-	uavcan_node::set_node_status_ok();
+	//uavcan_node::set_node_status_ok();
 
 	/*
 	 * Here we run some high-level self diagnostics, indicating the system health via UAVCAN and LED.
@@ -197,10 +197,10 @@ int main()
 
 		if (motor_is_blocked() || !temperature_sensor::is_ok()) {
 			led_ctl.set(board::LEDColor::YELLOW);
-			uavcan_node::set_node_status_critical();
+			//uavcan_node::set_node_status_critical();
 		} else {
 			led_ctl.set(board::LEDColor::DARK_GREEN);
-			uavcan_node::set_node_status_ok();
+			//uavcan_node::set_node_status_ok();
 		}
 
 		bg_config_manager.poll();
@@ -217,7 +217,7 @@ int main()
 
 
 #define MATCH_GCC_VERSION(major, minor)  \
-    ((__GNUC__ == (major)) && (__GNUC_MINOR__ == (minor)))
+    ((__GNUC__ == (major)) && (__GNUC_MINOR__ >= (minor)))
 
 #if !(MATCH_GCC_VERSION(7, 2))
 # error "This compiler is not supported"

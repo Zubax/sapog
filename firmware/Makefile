@@ -73,16 +73,17 @@ UDEFS += -DUAVCAN_STM32_TIMER_NUMBER=7                   \
          -DUAVCAN_STM32_CHIBIOS=1                        \
          -DUAVCAN_GENERAL_PURPOSE_PLATFORM=0
 
-include libuavcan/libuavcan/include.mk
-CPPSRC += $(LIBUAVCAN_SRC)
-UINCDIR += $(LIBUAVCAN_INC)
+UINCDIR += nunavut_out
+UINCDIR += libcanard/libcanard
+CSRC += $(SAPOG_BASE)/libcanard/libcanard/canard.c
 
-include libuavcan/libuavcan_drivers/stm32/driver/include.mk
-CPPSRC += $(LIBUAVCAN_STM32_SRC)
-UINCDIR += $(LIBUAVCAN_STM32_INC)
-
-$(info $(shell $(LIBUAVCAN_DSDLC) $(UAVCAN_DSDL_DIR)))
-UINCDIR += dsdlc_generated
+#
+# CAN driver & CAN r/w implementation
+#
+UINCDIR += bxcan
+CSRC += $(SAPOG_BASE)/bxcan/bxcan.c
+#CSRC += $(SAPOG_BASE)/src/borad/canEnInit.cpp
+#CSRC += $(SAPOG_BASE)/src/borad/canEnInit.hpp
 
 #
 # Git commit hash
