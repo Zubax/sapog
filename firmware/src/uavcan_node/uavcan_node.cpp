@@ -59,6 +59,7 @@ class : public chibios_rt::BaseStaticThread<4000>
     uavcan_node_Heartbeat_1_0 node_heartbeat{};
 	os::watchdog::Timer wdt_;
 	volatile bool need_to_print_status_ = false;
+    CanardTransferID message_transfer_id = 0;
 
     static void* canardAllocate(CanardInstance* const ins, const size_t amount)
     {
@@ -253,7 +254,6 @@ class : public chibios_rt::BaseStaticThread<4000>
 	}
 
     void publishHeartbeat(CanardInstance* const canard){
-        static CanardTransferID message_transfer_id;
         std::size_t msg_size = uavcan_node_Heartbeat_1_0_SERIALIZATION_BUFFER_SIZE_BYTES_;
         std::uint8_t buffer[uavcan_node_Heartbeat_1_0_SERIALIZATION_BUFFER_SIZE_BYTES_];
         uavcan_node_Heartbeat_1_0_serialize_(&node_heartbeat, buffer,  &msg_size);
